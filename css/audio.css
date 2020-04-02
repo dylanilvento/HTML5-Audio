@@ -6,11 +6,12 @@
 }
 /*Container for audio player*/
 #audioplayer{
-	width: 480px;
+	width: 600px;
 	height: 60px;
 	margin: auto;
 	margin-top: 50px;
 	border: solid;
+	box-shadow: 8px 8px #237794;
 }
 /* Play/Pause Button */
 #pButton{
@@ -30,18 +31,24 @@
 
 #timeline{
 	width: 382px;
-	height: 20px;
-	background: rgba(0,0,0,.3);
-	margin-top: 20px;
-	float: left;
-	border-radius: 15px;
+    height: 5px;
+    background: rgba(0,0,0,0);
+    margin-top: 24px;
+    float: left;
+    border-radius: 15px;
+    border: solid 3px #237794;
 }
 /*Grabable Playhead*/
 #playhead{
 	cursor: pointer;
-	width: 18px;
-	height: 18px;
-	border-radius: 50%;
-	margin-top: 1px;
-	background: black;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin-top: -6.5px;
+    background: black;
+}
+
+#counter {
+	float: right;
+	font-family: 'Roboto';
 }

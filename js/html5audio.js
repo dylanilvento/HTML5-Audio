@@ -1,10 +1,21 @@
 document.addEventListener("DOMContentLoaded", function(event) {
 
 var music = document.getElementById('music'); // id for audio element
-var duration; // Duration of audio clip
+var duration = music.duration; // Duration of audio clip
 var pButton = document.getElementById('pButton'); // play button
 var playhead = document.getElementById('playhead'); // playhead
 var timeline = document.getElementById('timeline'); // timeline
+var currentTime = document.getElementById('current-time');
+var totalTime = document.getElementById('total-time');
+
+
+setTimeout(function(){
+
+    totalTime.innerHTML = convertHMS(music.duration);
+
+}, 300);
+
+
 
 // timeline width adjusted for playhead
 var timelineWidth = timeline.offsetWidth - playhead.offsetWidth;
@@ -24,6 +35,15 @@ timeline.addEventListener("click", function(event) {
 // returns click as decimal (.77) of the total timelineWidth
 function clickPercent(event) {
     return (event.clientX - getPosition(timeline)) / timelineWidth;
+
+}
+
+function convertHMS(seconds) {
+
+    var timeDate = new Date(null);
+    timeDate.setSeconds(seconds); // specify value of SECONDS
+    var HMSTimeDate = timeDate.toISOString().substr(11, 8);
+    return HMSTimeDate;
 
 }
 
@@ -60,6 +80,11 @@ function moveplayhead(event) {
 
     if (newMargLeft >= 0 && newMargLeft <= timelineWidth) {
         playhead.style.marginLeft = newMargLeft + "px";
+
+        // var newPercent = playhead.style.marginLeft / timelineWidth;
+
+        // timeline.style.background = 'linear-gradient(90deg, rgba(35, 119, 148, 1) 0%, rgba(35, 119, 148, 1) ' + (playPercent * 100) + '% , rgba(255, 255, 255, 1) ' + (playPercent * 100) + '% )';
+   
     }
     if (newMargLeft < 0) {
         playhead.style.marginLeft = "0px";
@@ -67,17 +92,25 @@ function moveplayhead(event) {
     if (newMargLeft > timelineWidth) {
         playhead.style.marginLeft = timelineWidth + "px";
     }
+
+
+
 }
 
 // timeUpdate
 // Synchronizes playhead position with current point in audio
 function timeUpdate() {
-    var playPercent = timelineWidth * (music.currentTime / duration);
-    playhead.style.marginLeft = playPercent + "px";
-    if (music.currentTime == duration) {
+    var playPercent = (music.currentTime / music.duration);
+    playhead.style.marginLeft = (timelineWidth * playPercent) + "px";
+
+    timeline.style.background = 'linear-gradient(90deg, rgba(35, 119, 148, 1) 0%, rgba(35, 119, 148, 1) ' + (playPercent * 100) + '% , rgba(255, 255, 255, 1) ' + (playPercent * 100) + '% )';
+
+    if (music.currentTime == music.duration) {
         pButton.className = "";
         pButton.className = "play";
     }
+
+    currentTime.innerHTML = convertHMS(music.currentTime);
 }
 
 //Play and Pause
@@ -97,9 +130,9 @@ function play() {
 }
 
 // Gets audio file duration
-music.addEventListener("canplaythrough", function() {
-    duration = music.duration;
-}, false);
+// music.addEventListener("canplaythrough", function() {
+//     duration = music.duration; //think this is failure-prone
+// }, false);
 
 // getPosition
 // Returns elements left position relative to top-left of viewport
