@@ -14,13 +14,13 @@
 	box-shadow: 8px 8px #237794;
 }
 /* Play/Pause Button */
-#pButton{
+#play-pause-container{
 	height:60px;
 	width: 60px;
 	border: none;
 	background-size: 50% 50%;
-	background-repeat: no-repeat;
-	background-position: center;
+	/*background-repeat: no-repeat;
+	background-position: center;*/
 	float:left;
 	outline:none;
 
